@@ -4,7 +4,6 @@ import Header from "./header";
 function Album(props) {
   //track albums
   const [albums, setAlbums] = useState([]);
-  const [albumId, setAlbumId] = useState();
   const albumsRef = useRef();
   albumsRef.current = albums;
 
@@ -12,13 +11,10 @@ function Album(props) {
   useEffect(() => {
     getAllAlbum(props.match.params.id);
   }, [props.match.params.id]);
-  const searchById = (d) => {
-    d = albumId;
-  };
 
   //fetch albums
   const getAllAlbum = (id) => {
-    fetch(`https://jsonplaceholder.typicode.com/albums/1/photos/?id=${id}`)
+    fetch(`https://jsonplaceholder.typicode.com/albums/${id}/photos`)
       .then((response) => {
         return response.json();
       })
@@ -41,21 +37,23 @@ function Album(props) {
           <center>
             {albums.map((album) => (
               <ul key={album.id}>
-                <li>
-                  <div className="list-item">
-                    <div className="image-container">
-                      <center>
-                        <img
-                          className="img"
-                          src={`${album.thumbnailUrl}`}
-                          alt=""
-                        />
-                      </center>
+                <center>
+                  <li>
+                    <div className="list-item">
+                      <div className="image-container">
+                        <center>
+                          <img
+                            className="img"
+                            src={`${album.thumbnailUrl}`}
+                            alt=""
+                          />
+                        </center>
+                      </div>
+
+                      <h1>{album.title}</h1>
                     </div>
-                    <h1>{album.title}</h1>
-                    <p>{album.title}</p>
-                  </div>
-                </li>
+                  </li>
+                </center>
               </ul>
             ))}
           </center>
